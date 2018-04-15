@@ -25,8 +25,6 @@ weixin_max_follow = 900
 
 
 # 自定义功能函数
-
-
 def date_to_str(origin_data):
     for x in origin_data:
         if str(type(origin_data.get(x))) == "<type 'datetime.datetime'>":
@@ -52,9 +50,8 @@ class Application(tornado.web.Application):
             debug=False,
         )
         client = MongoClient('localhost', port=27017)
-        # if client["mdq_weixin"].authenticate(
-        # "lgj", "lgj", mechanism="SCRAM-SHA-1"):
-        if client["admin"].authenticate("kb", "kb", mechanism="SCRAM-SHA-1"):
+        if client["mytest"].authenticate("lgj", "lgj", mechanism="SCRAM-SHA-1"):
+        # if client["admin"].authenticate("kb", "kb", mechanism="SCRAM-SHA-1"):
             # 存储未登陆前抓取的公众号和单个文章
             self.biz_info = client["mdq_weixin"]["biz_info"]
             # 存储账号和微信号的关系，对应微信内部编号后的公众号ID
@@ -211,30 +208,51 @@ class PublicBlogHandler(tornado.web.RequestHandler):
             req_body = {"blog_list": self.blog_list}
             self.write(req_body)
         else:
-            # curl "http://127.0.0.1:8001/search/blogs?keywords=weixin&source=weixin&accou_id=aa&public_id=zhihu&url=&data=1"
+            # curl "http://127.0.0.1:8001/search/blogs?keywords=weixin&source=weixin&account_id=1a&public_id=zhihu&url="
             yesterday = datetime.datetime.fromtimestamp(time.time() - 15 * 60 * 60 * 24)
             # 存储账号和微信号的关系，对应微信内部编号后的公众号ID
             self.relationship = self.application.relationship
-            # 通过account_id查询得到微信用户别名
-            print(account_id)
-            print('self.relationship.find_one({"account_id": account_id}):',
-                  self.relationship.find_one({"account_id": account_id}))
-            alias_name = self.relationship.find_one({"account_id": account_id}).get("account_info").get("alias_name",
-                                                                                                        ".*")
-            # 通过public_id查询得到微信公众号别名
-            public_talker = self.relationship.find_one({"public_id": public_id}).get("public_info").get("public_talker",
-                                                                                                        ".*")
+            """
+            relationship.account_id-->relationship.account_info.alias_name-->biz_article.username
+            relationship.public_id-->relationship.public_info.public_talker-->biz_article.data.talker
+            
+            有account_id就获取account_id，获取不到或者没有，没有就默认account_id=".*"，搜索返回全部的文章
+            url和keyword 都是在data.content中查询，需要考虑到正则联合的问题，如果简单用".*|http:"是不行的
+            可以建议合并在一起使用，url就是keyword的子集
+            """
+            # 通过account_id查询得到微信用户别名-----针对微信
+            result_by_acount=self.relationship.find_one({"account_id": account_id})
+            if result_by_acount:
+                alias_name =result_by_acount.get("account_info",{}).get("alias_name", ".*")
+            else:
+                alias_name = ".*"
+            # 通过public_id查询得到微信公众号别名-----针对微信
+            result_by_public = self.relationship.find_one({"public_id": public_id})
+            if result_by_public:
+                public_talker =result_by_public.get("public_info",{}).get("public_talker", ".*")
+            else:
+                public_talker = ".*"
+            # 针对微信平台
+            if public_talker != ".*" and alias_name != ".*":
+                source= "weixin"
+
+            alias_name_regex = {'$regex': alias_name}
+            public_talker_regex = {'$regex': public_talker}
             keywords_regex = {'$regex': keywords}
             source_regex = {'$regex': source}
             date_regex = {"$gte": yesterday}
-            regex = {
-                "username": alias_name,
-                "data.content": keywords_regex,
-                "data.talker": public_talker,
-                "utime": date_regex}
-            print("regex:",
-                  regex)  # ('regex:', {'username': u'eeee', 'data.talker': u'dddd', 'data.content': {'$regex': u'.*'}, 'utime': {'$gte': datetime.datetime(2018, 3, 29, 20, 41, 8, 920246)}})
+            # if url == "":
+            #     url_regex = {'$regex': ".*"}
+            # else:
+            #     url_regex = {'$regex': url}
 
+            regex = {
+                "username": alias_name_regex,
+                "data.talker": public_talker_regex,
+                "data.content": keywords_regex,
+                "utime": date_regex,
+            }
+            print("regex:", regex)
             # 按时间降序排列
             self.public_blog_list = self.biz_article.find(
                 regex).sort("ctime", -1)
@@ -246,22 +264,23 @@ class PublicBlogHandler(tornado.web.RequestHandler):
                     "title": x.get("title", None),  # 标题
                     "url": get_weixin_url(x.get("data").get("content", "")),  # 文章url,
                     "date": x.get("utime").isoformat(),  # 爬到的时间
-                    "source": x.get("source")  # 平台
+                    #"source": x.get("source"),  # 其他平台
+                    "source": source
                 })
                 print("x:", x)
             req_body = {"public_list": self.public_list}
             self.write(req_body)
 
-    # curl -X DELETE "http://127.0.0.1:8001/public?public_id=oIWsFtyFbGBAOKwA3JdLusG6VMtw&status=1&test=test11"
+    # curl -X DELETE "http://127.0.0.1:8001/search/blogs"    提供删除抓取到的文章接口
     def delete(self, urlinfo=None):
-        public_id = self.get_argument("public_id")
-        print("get:", public_id)
         # 删除
         self.biz_article = self.application.biz_article  # 订阅后抓取的公众号推送的文章，内涵编号后的公众号ID
-        self.biz_article.delete_one({"id": public_id})
-        self.public_blog = self.biz_article.find_one({"id": public_id})
-        if not self.public_blog:
-            self.write({'delete': "ok", "public_id": public_id})
+        yesterday = datetime.datetime.fromtimestamp(time.time() - 30 * 60 * 60 * 24)
+        regex = {"ctime": {"$lt": yesterday}}
+        # 按时间删除
+        self.biz_info = self.application.biz_info
+        deleted_count = self.biz_info.delete_many(regex).deleted_count
+        self.write({"deleted_count": deleted_count, 'edit': "ok"})
 
 
 # 账号与公众号关系管理
@@ -529,17 +548,14 @@ if __name__ == "__main__":
 # 使用或创建数据库
 >use newdb
 switched to db newdb
-
 # 删除数据库
 >db.dropDatabase()
 >{ "dropped" : "newdb", "ok" : 1 }
-
 # 删除集合
 > db.relationship.drop()
 true
 # 创建集合
 db.createCollection("relationship")
-
 db.biz_article.insert({
 	"return_rowid" : 1679,
     "username" : "eeee",
@@ -566,8 +582,6 @@ db.biz_article.insert({
 	"method" : "insert",
 	"utime" : ISODate("2018-04-09T07:32:35.216Z")
 })
-
-
 db.relationship.insert({
             "account_id":'aaa',
             "account_name":"bbbb",
@@ -587,5 +601,4 @@ db.relationship.insert({
             "source":"weixin",
             "ctime":"2018.4.11",
         })
-
 """
