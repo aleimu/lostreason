@@ -6,7 +6,9 @@ http://api.mongodb.com/python/current/api/pymongo/cursor.html?highlight=where
 
 https://blog.csdn.net/seeground/article/details/49488407
 
-
+http://tornado-zh.readthedocs.io/zh/latest/gen.html#  #很好的参考文章
+    
+    
 import asyncmongo
 
 import asyncmongo
