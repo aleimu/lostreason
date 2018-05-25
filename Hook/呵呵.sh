@@ -489,11 +489,10 @@ https://droidyue.com/blog/2014/11/23/block-web-resource-in-webview/
 
 
 
-
-
+////////////////////////////////////
 {
 	
-	package com.iwencai.crawl.hechat.APPs.Wechat.functions;
+	package com.aaaa.crawl.bbbb.APPs.Wechat.functions;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -518,16 +517,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.iwencai.crawl.hechat.APPs.Wechat.Main;
-import com.iwencai.crawl.hechat.APPs.Wechat.helper.MContentValues;
-import com.iwencai.crawl.hechat.Helper.BackgroundService;
-import com.iwencai.crawl.hechat.Helper.Constant;
-import com.iwencai.crawl.hechat.Helper.RefUtil;
-import com.iwencai.crawl.hechat.Helper.Utils;
-//import com.iwencai.crawl.hechat.Helper.WechatHookManager;
-import com.iwencai.crawl.hechat.Helper.WorkStatusCallback;
-import com.iwencai.crawl.hechat.Helper.ThreadUtil;
-import com.iwencai.crawl.hechat.Helper.MsgExtBean;
+import com.aaaa.crawl.bbbb.APPs.Wechat.Main;
+import com.aaaa.crawl.bbbb.APPs.Wechat.helper.MContentValues;
+import com.aaaa.crawl.bbbb.Helper.BackgroundService;
+import com.aaaa.crawl.bbbb.Helper.Constant;
+import com.aaaa.crawl.bbbb.Helper.RefUtil;
+import com.aaaa.crawl.bbbb.Helper.Utils;
+//import com.aaaa.crawl.bbbb.Helper.WechatHookManager;
+import com.aaaa.crawl.bbbb.Helper.WorkStatusCallback;
+import com.aaaa.crawl.bbbb.Helper.ThreadUtil;
+import com.aaaa.crawl.bbbb.Helper.MsgExtBean;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -1030,7 +1029,7 @@ public class MsgHandler {
 
     private static void handleMessage(String tableName, String type, ContentValues cvs) throws Exception {
 
-        //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "received a message");
+        //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "received a message");
 
         // intent.putExtra("data", bundle).putExtra("topic", Constant.TOPIC_HEART_BEAT);
         // BackgroundService.MQTTClient.publishMessage(Constant.TOPIC_SEND_MESSAGE, data);
@@ -1113,9 +1112,9 @@ public class MsgHandler {
     }
 
     private static void handleRconversation(String tableName, String type, ContentValues cv) {
-        //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "Received a resource conversation, type: "+type);
+        //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "Received a resource conversation, type: "+type);
         if (tableName.equals("rconversation") && cv.get("parentRef") != null && cv.get("parentRef").equals("officialaccounts")) {
-            //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "This is a article msg.");
+            //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "This is a article msg.");
             parseArticleXMLAndSend((String) cv.get("content"), (String) cv.get("talker"));
         }
     }
@@ -1196,7 +1195,7 @@ public class MsgHandler {
 ////////////////////////////////////
 {
 
-package com.iwencai.crawl.hechat.APPs.Wechat.functions;
+package com.aaaa.crawl.bbbb.APPs.Wechat.functions;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -1222,16 +1221,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 */
-import com.iwencai.crawl.hechat.APPs.Wechat.Main;
-import com.iwencai.crawl.hechat.APPs.Wechat.helper.MContentValues;
-import com.iwencai.crawl.hechat.Helper.BackgroundService;
-import com.iwencai.crawl.hechat.Helper.Constant;
-import com.iwencai.crawl.hechat.Helper.RefUtil;
-import com.iwencai.crawl.hechat.Helper.Utils;
-//import com.iwencai.crawl.hechat.Helper.WechatHookManager;
-import com.iwencai.crawl.hechat.Helper.WorkStatusCallback;
-import com.iwencai.crawl.hechat.Helper.ThreadUtil;
-import com.iwencai.crawl.hechat.Helper.MsgExtBean;
+import com.aaaa.crawl.bbbb.APPs.Wechat.Main;
+import com.aaaa.crawl.bbbb.APPs.Wechat.helper.MContentValues;
+import com.aaaa.crawl.bbbb.Helper.BackgroundService;
+import com.aaaa.crawl.bbbb.Helper.Constant;
+import com.aaaa.crawl.bbbb.Helper.RefUtil;
+import com.aaaa.crawl.bbbb.Helper.Utils;
+//import com.aaaa.crawl.bbbb.Helper.WechatHookManager;
+import com.aaaa.crawl.bbbb.Helper.WorkStatusCallback;
+import com.aaaa.crawl.bbbb.Helper.ThreadUtil;
+import com.aaaa.crawl.bbbb.Helper.MsgExtBean;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -1816,7 +1815,7 @@ public class MsgHandler {
 
     private static void handleMessage(String tableName, String type, ContentValues cvs) throws Exception {
 
-        //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "received a message");
+        //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "received a message");
 
         // intent.putExtra("data", bundle).putExtra("topic", Constant.TOPIC_HEART_BEAT);
         // BackgroundService.MQTTClient.publishMessage(Constant.TOPIC_SEND_MESSAGE, data);
@@ -1899,9 +1898,9 @@ public class MsgHandler {
     }
 
     private static void handleRconversation(String tableName, String type, ContentValues cv) {
-        //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "Received a resource conversation, type: "+type);
+        //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "Received a resource conversation, type: "+type);
         if (tableName.equals("rconversation") && cv.get("parentRef") != null && cv.get("parentRef").equals("officialaccounts")) {
-            //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "This is a article msg.");
+            //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "This is a article msg.");
             parseArticleXMLAndSend((String) cv.get("content"), (String) cv.get("talker"));
         }
     }
@@ -1978,7 +1977,7 @@ public class MsgHandler {
 }
 ////////////////////////////////////
 {
-package com.iwencai.crawl.hechat.APPs.Wechat.functions;
+package com.aaaa.crawl.bbbb.APPs.Wechat.functions;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -1994,13 +1993,13 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.CookieManager;
-import com.iwencai.crawl.hechat.APPs.Wechat.Main;
-import com.iwencai.crawl.hechat.APPs.Wechat.helper.MContentValues;
-import com.iwencai.crawl.hechat.Helper.BackgroundService;
-import com.iwencai.crawl.hechat.Helper.Constant;
-import com.iwencai.crawl.hechat.Helper.RefUtil;
-import com.iwencai.crawl.hechat.Helper.Utils;
-import com.iwencai.crawl.hechat.Helper.MsgExtBean;
+import com.aaaa.crawl.bbbb.APPs.Wechat.Main;
+import com.aaaa.crawl.bbbb.APPs.Wechat.helper.MContentValues;
+import com.aaaa.crawl.bbbb.Helper.BackgroundService;
+import com.aaaa.crawl.bbbb.Helper.Constant;
+import com.aaaa.crawl.bbbb.Helper.RefUtil;
+import com.aaaa.crawl.bbbb.Helper.Utils;
+import com.aaaa.crawl.bbbb.Helper.MsgExtBean;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -2535,7 +2534,7 @@ public class MsgHandler {
 
     private static void handleMessage(String tableName, String type, ContentValues cvs) throws Exception {
 
-        //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "received a message");
+        //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "received a message");
 
         // intent.putExtra("data", bundle).putExtra("topic", Constant.TOPIC_HEART_BEAT);
         // BackgroundService.MQTTClient.publishMessage(Constant.TOPIC_SEND_MESSAGE, data);
@@ -2618,9 +2617,9 @@ public class MsgHandler {
     }
 
     private static void handleRconversation(String tableName, String type, ContentValues cv) {
-        //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "Received a resource conversation, type: "+type);
+        //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "Received a resource conversation, type: "+type);
         if (tableName.equals("rconversation") && cv.get("parentRef") != null && cv.get("parentRef").equals("officialaccounts")) {
-            //Log.di(com.iwencai.crawl.hechat.APPs.Wechat.Main.TAG, "This is a article msg.");
+            //Log.di(com.aaaa.crawl.bbbb.APPs.Wechat.Main.TAG, "This is a article msg.");
             parseArticleXMLAndSend((String) cv.get("content"), (String) cv.get("talker"));
         }
     }
@@ -2697,7 +2696,7 @@ public class MsgHandler {
 }
 
 {
-	package com.iwencai.crawl.hechat;
+	package com.aaaa.crawl.bbbb;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -2714,7 +2713,7 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 
 
 public class Main implements IXposedHookLoadPackage {
-    public final static String TAG = "HeChat";
+    public final static String TAG = "bbbb";
     public final static String packageName = "com.tencent.mm";
     public final static String chatting = "com.tencent.mm.ui.chatting";
     XC_LoadPackage.LoadPackageParam loadPackageParam;
@@ -2803,7 +2802,7 @@ public class Main implements IXposedHookLoadPackage {
 05-22 16:20:07.663 4686-4795/com.tencent.mm:tools I/cr_LibraryLoader: Expected native library version number "52.0.2743.100", actual native library version number "52.0.2743.100"
 05-22 16:20:07.686 4686-4686/com.tencent.mm:tools W/art: Long monitor contention event with owner method=long android.database.sqlite.SQLiteConnection.nativeOpen(java.lang.String, int, java.lang.String, boolean, boolean) from SQLiteConnection.java:4294967294 waiters=0 for 1.586s
 05-22 16:20:07.688 4686-4795/com.tencent.mm:tools I/Xposed: *******header******{X-Requested-With=XMLHttpRequest, Q-UA2=QV=3&PL=ADR&PR=WX&PP=com.tencent.mm&PPVN=6.6.3&TBSVC=43603&CO=BK&COVC=043909&PB=GE&VE=GA&DE=PHONE&CHID=0&LCID=9422&MO= PixelXL &RL=1440*2392&OS=7.1.2&API=25, Cookie=wxuin=3789529722; devicetype=android-23; version=26060532; lang=zh_CN; pass_ticket=PyTBvgL843N0ZM7FRnt0LNQ1WackIGZ7IlBpMeCIJOM3n02fwmmE5rw2VwBLxgr0; wap_sid2=CPrE/o4OElx1OEEwblNsbFFhUmRxMHZHbHFiQ1pMLWVSSEdGZEdwUG1hblE3S1RkNGtSVWJYc3g1LVpyT0JLWWppZXhTS2hfY3FVcTFaeUdqekNxX3d3SjhyWEpFYjBEQUFBfjDLpI/YBTgNQAE=; rewardsn=7d3c4f43a7a0d28e4572; wxtokenkey=777, Q-Auth=31045b957cf33acf31e40be2f3e71c5217597676a9729f1b, User-Agent=Mozilla/5.0 (Linux; Android 7.1.2; Pixel XL Build/NZH54D; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/6.2 TBS/043909 Mobile Safari/537.36 MicroMessenger/6.6.3.1260(0x26060336) NetType/WIFI Language/zh_CN, Q-GUID=b08a5edb5e2a655000ca6e7e13b788cb}
-05-22 16:20:07.688 4686-4795/com.tencent.mm:tools I/art: Rejecting re-init on previously-failed class java.lang.Class<com.iwencai.crawl.hechat.APPs.Wechat.functions.MsgHandler$9>
+05-22 16:20:07.688 4686-4795/com.tencent.mm:tools I/art: Rejecting re-init on previously-failed class java.lang.Class<com.aaaa.crawl.bbbb.APPs.Wechat.functions.MsgHandler$9>
 
 
 
