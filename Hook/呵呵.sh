@@ -440,7 +440,9 @@ https://blog.csdn.net/luman1991/article/details/52887533
 
 
 
-
+# Android中WebView拦截替换网络请求数据
+WebView 的 shouldInterceptRequest 可以让我们监听WebView发出的请求并做相应的处理
+https://droidyue.com/blog/2014/11/23/block-web-resource-in-webview/
 
 
 /*
