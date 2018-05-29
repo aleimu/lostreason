@@ -69,7 +69,7 @@ if __name__ == '__main__':
     </div>
     <script src="{{static_url('jquery.min.js')}}"></script>
     <script type="text/javascript">
-        var ws = new WebSocket("ws://10.10.20.153:8000/chat");
+        var ws = new WebSocket("ws://XXX.XXX.XXX.XXX:8000/chat");
         ws.onmessage = function(e) {
             $("#contents").append("<p>" + e.data + "</p>");
         }
